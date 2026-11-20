@@ -1,9 +1,22 @@
 var builder = WebApplication.CreateBuilder(args);
+var assembly = typeof(Program).Assembly;
+
 // Add Service to the container
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblies(assembly);
+});
+
+builder.Services.AddMarten(config =>
+{
+    config.Connection(builder.Configuration.GetConnectionString("Database")!);
+}).UseLightweightSessions();
+
+builder.Services.AddCarter();
 
 var app = builder.Build();
-// Add the http request pipeline
 
-app.MapGet("/", () => "Hello World!");
+// Add the http request pipeline
+app.MapCarter();
 
 app.Run();
