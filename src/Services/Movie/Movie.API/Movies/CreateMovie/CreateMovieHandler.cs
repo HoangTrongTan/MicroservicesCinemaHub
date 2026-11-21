@@ -39,7 +39,7 @@ public class CreateMovieCommandValidator : AbstractValidator<CreateMovieCommand>
     }
 }
 
-public class CreateMovieCommandHandler
+internal class CreateMovieCommandHandler
     (IDocumentSession session)
     : ICommandHandler<CreateMovieCommand, CreateMovieResult>
 {
