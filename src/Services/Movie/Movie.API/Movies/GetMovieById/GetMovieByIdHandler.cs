@@ -1,8 +1,8 @@
 ﻿namespace Movies.API.Movies.GetMovieById;
 public record GetMovieByIdQuery(Guid Id) : IQuery<GetMovieByIdResult>, ICacheableQuery
 {
-    public string CacheKey => $"movie:{Id}";
-    public TimeSpan? Expiration => TimeSpan.FromDays(7);
+    string ICacheableQuery.CacheKey => $"movie:{Id}";
+    TimeSpan? ICacheableQuery.Expiration => TimeSpan.FromDays(7);
 }
 
 public record GetMovieByIdResult(Movie Movie);

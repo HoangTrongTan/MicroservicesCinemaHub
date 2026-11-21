@@ -1,7 +1,7 @@
 ﻿namespace Movies.API.Movies.DeleteMovie;
 public record DeleteMovieCommand(Guid Id) : ICommand<DeleteMovieResult>, ICacheInvalidatorCommand
 {
-    public string[] CacheKeys => [$"movie:{Id}"];
+    string[] ICacheInvalidatorCommand.CacheKeys => [$"movie:{Id}"];
 }
 
 public record DeleteMovieResult(bool IsSuccess);

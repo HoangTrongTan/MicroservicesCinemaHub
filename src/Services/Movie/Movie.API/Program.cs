@@ -38,3 +38,5 @@ app.UseExceptionHandler(opts => { });
 app.MapCarter();
 
 app.Run();
+
+//docker run -d --name cinema-redis -p 6379:6379 redis: 7 - alpine redis - server--maxmemory 128mb --maxmemory-policy allkeys-lru

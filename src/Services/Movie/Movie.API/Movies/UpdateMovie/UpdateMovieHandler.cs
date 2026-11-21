@@ -9,7 +9,7 @@ public record UpdateMovieCommand(
     string PosterUrl,
     MovieStatus Status) : ICommand<UpdateMovieResult>, ICacheInvalidatorCommand
 {
-    public string[] CacheKeys => [$"movie:{Id}"];
+    string[] ICacheInvalidatorCommand.CacheKeys => [$"movie:{Id}"];
 }
 
 public record UpdateMovieResult(bool IsSuccess);
