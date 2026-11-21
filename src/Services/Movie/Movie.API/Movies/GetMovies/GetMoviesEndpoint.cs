@@ -1,5 +1,14 @@
 ﻿namespace Movies.API.Movies.GetMovies;
-public record GetMoviesRequest(int? PageNumber = 1, int? PageSize = 10);
+public record GetMoviesRequest(
+    string? Title,
+    string? Genre = null,
+    MovieStatus? Status = null,
+    int? PageNumber = 1,
+    int? PageSize = 10,
+    DateOnly? ReleaseDateFrom = null,
+    DateOnly? ReleaseDateTo = null,
+    string? SortBy = null,
+    string? SortOrder = "desc");
 public record GetMoviesResponse(IEnumerable<Movie> Movies, long TotalCount, long TotalPages, bool HasNextPage, bool HasPreviousPage);
 public class GetMoviesEndpoint : ICarterModule
 {

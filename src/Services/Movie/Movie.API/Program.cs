@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 
@@ -14,6 +16,11 @@ builder.Services.AddMartenDatabase(builder.Configuration);
 builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddCarter();
+
+builder.Services.ConfigureHttpJsonOptions(opts =>
+{
+    opts.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 var app = builder.Build();
 
