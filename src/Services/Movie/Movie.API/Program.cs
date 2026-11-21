@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
 
@@ -22,9 +20,13 @@ builder.Services.ConfigureHttpJsonOptions(opts =>
     opts.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 // Add the http request pipeline
 app.MapCarter();
+
+app.UseExceptionHandler(opts => { });
 
 app.Run();

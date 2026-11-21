@@ -10,3 +10,5 @@ global using Movies.API.Data;
 global using Marten.Pagination;
 global using BuildingBlocks.Exceptions;
 global using Movies.API.Exceptions;
+global using System.Text.Json.Serialization;
+global using BuildingBlocks.Exceptions.Handler;
