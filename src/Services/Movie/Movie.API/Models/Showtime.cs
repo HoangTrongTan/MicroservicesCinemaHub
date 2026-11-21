@@ -1,4 +1,4 @@
-﻿namespace Movie.API.Models;
+﻿namespace Movies.API.Models;
 
 public class Showtime
 {

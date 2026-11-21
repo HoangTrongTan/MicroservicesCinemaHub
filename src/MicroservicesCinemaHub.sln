@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{94
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Movie", "Movie", "{19D87BED-69FD-48C3-930B-573D27BE26AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movie.API", "Services\Movie\Movie.API\Movie.API.csproj", "{D72749BF-5687-43EB-AE25-76F4A88EB9BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.API", "Services\Movie\Movie.API\Movies.API.csproj", "{D72749BF-5687-43EB-AE25-76F4A88EB9BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
