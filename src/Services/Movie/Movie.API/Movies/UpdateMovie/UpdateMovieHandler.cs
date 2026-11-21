@@ -7,9 +7,13 @@ public record UpdateMovieCommand(
     AgeRating AgeRating,
     DateOnly ReleaseDate,
     string PosterUrl,
-    MovieStatus Status) : ICommand<UpdateMovieResult>;
+    MovieStatus Status) : ICommand<UpdateMovieResult>, ICacheInvalidatorCommand
+{
+    public string[] CacheKeys => [$"movie:{Id}"];
+}
+
 public record UpdateMovieResult(bool IsSuccess);
-public class UpdateMovieCommandHandler
+internal class UpdateMovieCommandHandler
     (IDocumentSession session)
     : ICommandHandler<UpdateMovieCommand, UpdateMovieResult>
 {

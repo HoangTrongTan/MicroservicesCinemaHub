@@ -1,8 +1,9 @@
-﻿
-using JasperFx.Events.Daemon;
+﻿namespace Movies.API.Movies.DeleteMovie;
+public record DeleteMovieCommand(Guid Id) : ICommand<DeleteMovieResult>, ICacheInvalidatorCommand
+{
+    public string[] CacheKeys => [$"movie:{Id}"];
+}
 
-namespace Movies.API.Movies.DeleteMovie;
-public record DeleteMovieCommand(Guid Id) : ICommand<DeleteMovieResult>;
 public record DeleteMovieResult(bool IsSuccess);
 public class DeleteMovieCommandValidator : AbstractValidator<DeleteMovieCommand>
 {
@@ -11,7 +12,7 @@ public class DeleteMovieCommandValidator : AbstractValidator<DeleteMovieCommand>
         RuleFor(x => x.Id).NotEmpty().WithMessage("Movie Id không được để trống nha sếp!");
     }
 }
-public class DeleteMovieCommandHandler
+internal class DeleteMovieCommandHandler
     (IDocumentSession session)
     : ICommandHandler<DeleteMovieCommand, DeleteMovieResult>
 {

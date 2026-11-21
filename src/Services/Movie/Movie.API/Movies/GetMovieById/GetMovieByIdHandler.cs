@@ -1,7 +1,12 @@
 ﻿namespace Movies.API.Movies.GetMovieById;
-public record GetMovieByIdQuery(Guid Id) : IQuery<GetMovieByIdResult>;
+public record GetMovieByIdQuery(Guid Id) : IQuery<GetMovieByIdResult>, ICacheableQuery
+{
+    public string CacheKey => $"movie:{Id}";
+    public TimeSpan? Expiration => TimeSpan.FromDays(7);
+}
+
 public record GetMovieByIdResult(Movie Movie);
-public class GetMovieByIdQueryHandler
+internal class GetMovieByIdQueryHandler
     (IQuerySession session)
     : IQueryHandler<GetMovieByIdQuery, GetMovieByIdResult>
 {
