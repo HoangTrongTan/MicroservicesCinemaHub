@@ -12,6 +12,8 @@ public static class MartenExtensions
 
             // Movies
             config.Schema.For<Movie>().UniqueIndex(x => x.Title, x => x.ReleaseDate);
+            //Cinema
+            config.Schema.For<Cinema>().UniqueIndex(x => x.Name, x => x.City);
         }).UseLightweightSessions();
 
         return services;
