@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Cinemas\" />
     <Folder Include="Auditoriums\" />
     <Folder Include="Showtimes\" />
   </ItemGroup>
