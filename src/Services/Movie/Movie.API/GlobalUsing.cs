@@ -8,3 +8,5 @@ global using FluentValidation;
 global using BuildingBlocks.Behaviors;
 global using Movies.API.Data;
 global using Marten.Pagination;
+global using BuildingBlocks.Exceptions;
+global using Movies.API.Exceptions;

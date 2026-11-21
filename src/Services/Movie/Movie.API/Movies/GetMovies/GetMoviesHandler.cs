@@ -12,7 +12,7 @@ public class GetMoviesValidator : AbstractValidator<GetMoviesQuery>
             .InclusiveBetween(1, 100).WithMessage("Số lượng phim mỗi trang phải từ 1 đến 100");
     }
 }
-internal class GetMoviesHandler
+internal class GetMoviesQueryHandler
     (IQuerySession session)
     : IQueryHandler<GetMoviesQuery, GetMoviesResult>
 {
