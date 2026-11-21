@@ -45,6 +45,15 @@ public class CreateMovieCommandHandler
 {
     public async Task<CreateMovieResult> Handle(CreateMovieCommand command, CancellationToken cancellationToken)
     {
+        var isExist = await session
+            .Query<Movie>()
+            .AnyAsync(x => x.Title.Equals(command.Title, StringComparison.OrdinalIgnoreCase) && x.ReleaseDate == command.ReleaseDate, cancellationToken);
+
+        if (isExist)
+        {
+            throw new Exception($"Phim '{command.Title}' đã tồn tại rồi sếp ơi!");
+        }
+
         var movive = new Movie
         {
           Title = command.Title,
