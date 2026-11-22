@@ -1,0 +1,6 @@
+services:
+  movies.api:
+    image: ${DOCKER_REGISTRY-}moviesapi
+    build:
+      context: .
+      dockerfile: Services/Movie/Movie.API/Dockerfile
