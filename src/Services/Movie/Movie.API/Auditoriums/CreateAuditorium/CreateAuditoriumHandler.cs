@@ -33,7 +33,7 @@ internal class CreateAuditoriumCommandHandler
 
         if (!cinemaExits)
         {
-            throw new CinemaNotFoundException(command.CinemaId)
+            throw new CinemaNotFoundException(command.CinemaId);
         }
 
         var auditorium = new Auditorium
