@@ -19,4 +19,41 @@ public class Voucher
     public bool IsActive { get; set; } = true;
 
     public List<VoucherUsage> Usages { get; set; } = [];
+
+    public static Voucher Create(
+        string code,
+        string description,
+        DiscountType discountType,
+        decimal discountValue,
+        decimal minOrderAmount,
+        decimal? maxDiscountAmount,
+        DateTimeOffset expiresAt,
+        int maxUsageCount,
+        Guid? id = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(code);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(discountValue);
+        ArgumentOutOfRangeException.ThrowIfNegative(minOrderAmount);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(maxUsageCount);
+
+        if (discountType == DiscountType.Percentage && discountValue > 100)
+        {
+            throw new ArgumentOutOfRangeException(nameof(discountValue), "Giảm phần trăm mà > 100% là định tặng tiền cho khách luôn hả sếp? 😂");
+        }
+
+        return new Voucher
+        {
+            Id = id ?? Guid.NewGuid(),
+            Code = code.Trim().ToUpperInvariant(),
+            Description = description.Trim(),
+            DiscountType = discountType,
+            DiscountValue = discountValue,
+            MinOrderAmount = minOrderAmount,
+            MaxDiscountAmount = discountType == DiscountType.Percentage ? maxDiscountAmount : null,
+            ExpiresAt = expiresAt.ToUniversalTime(), // Ép về UTC cho Npgsql đỡ khóc 🐘
+            MaxUsageCount = maxUsageCount,
+            CurrentUsageCount = 0,
+            IsActive = true
+        };
+    }
 }
