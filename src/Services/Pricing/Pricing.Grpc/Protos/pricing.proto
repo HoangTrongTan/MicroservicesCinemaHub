@@ -1,0 +1,6 @@
+﻿namespace Pricing.Grpc.Protos
+{
+    public class pricing
+    {
+    }
+}
