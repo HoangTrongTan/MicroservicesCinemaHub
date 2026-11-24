@@ -1,6 +1,5 @@
-﻿namespace Pricing.Grpc.Protos
-{
-    public class pricing
-    {
-    }
-}
+﻿syntax = "proto3";
+
+option	csharp_namespace = "Pricing.Grpc";
+
+package pricing;

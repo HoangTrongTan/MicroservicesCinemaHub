@@ -24,4 +24,4 @@ if (app.Environment.IsDevelopment())
 
 app.Run();
 
-// Add-Migration InitailCreate -OutputDir Data/Migrations
+// Add-Migration InitailCreate -OutputDir Migrations
