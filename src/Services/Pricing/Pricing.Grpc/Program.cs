@@ -1,3 +1,5 @@
+using Pricing.Grpc.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,10 +13,19 @@ builder.Services.AddDbContext<PricingDbContext>(options =>
     });
 });
 
-builder.Services.AddGrpc();
+builder.Services.AddGrpc(options =>
+{
+
+});
+
+builder.Services.AddGrpcReflection();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
+
+// Map endpoint gRPC
+app.MapGrpcService<PricingService>();
+
 if (app.Environment.IsDevelopment())
 {
     await app.InitialiseDatabaseAsync();

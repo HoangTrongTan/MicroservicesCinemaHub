@@ -3,3 +3,97 @@
 option	csharp_namespace = "Pricing.Grpc";
 
 package pricing;
+
+import "google/protobuf/timestamp.proto";
+
+service PricingProtoService {
+	rpc CalculatePrice (CalculatePriceRequest) returns (CalculatePriceResponse);
+	rpc ValidateVoucher (ValidateVoucherRequest) returns (ValidateVoucherResponse);
+	rpc RedeemVoucher (RedeemVoucherRequest) returns (RedeemVoucherResponse);
+	rpc ReleaseVoucher (ReleaseVoucherRequest) returns (ReleaseVoucherResponse);
+}
+
+enum SeatTypeProto {
+	SEAT_TYPE_UNSPECIFIED = 0;
+	STANDARD = 1;
+	VIP = 2;
+	COUPLE = 3;
+}
+
+enum MembershipTierProto {
+	TIER_NONE = 0;
+	SILVER = 1;
+	GOLD = 2;
+	PLATINUM = 3;
+}
+
+// 1. CalculatePrice ----
+message SeatInput {
+	string seat_code = 1;
+	SeatTypeProto seat_type = 2;
+}
+
+message CalculatePriceRequest {
+	double base_price = 1;
+	google.protobuf.Timestamp showtime_start = 2;
+	MembershipTierProto membership_tier = 3;
+	string customer_id = 4;
+	string voucher_code = 5;
+	repeated SeatInput seats = 6;
+}
+
+message SeatPriceBreakdown {
+	string seat_code = 1;
+	SeatTypeProto seat_type = 2;
+	double base_price = 3;
+	double seat_type_multiplier = 4;
+	double time_slot_multiplier = 5; // Trước 12h: 0.8, sau 22h: 0.9, cuối tuần: 1.15
+	double seat_final_price = 6;
+}
+
+message CalculatePriceResponse {
+	repeated SeatPriceBreakdown seat_breakdowns = 1;
+	double subtotal = 2;
+	double membership_discount = 3;
+	double voucher_discount = 4;
+	double final_total = 5;
+	string applied_voucher_code = 6;
+}
+
+// 2. Validate voucher ----------
+message ValidateVoucherRequest {
+	string voucher_code = 1;
+	string customer_id = 2;
+	double order_amount = 3;
+}
+
+message ValidateVoucherResponse {
+	bool is_valid = 1;
+	string message = 2;
+	double estimated_discount = 3;
+}
+
+// 3. RedeemVoucher (Saga gọi)
+message RedeemVoucherRequest {
+	string voucher_code = 1;
+	string customer_id = 2;
+	string booking_id = 3;
+	double order_amount = 4;
+}
+
+message RedeemVoucherResponse {
+	bool success = 1;
+	double discount_amount = 2;
+	string message = 3;
+}
+
+// 4. ReleaseVoucher (Saga bù trừ khi thanh toán sịt)
+message ReleaseVoucherRequest {
+	string voucher_code = 1;
+	string booking_id = 2;
+}
+
+message ReleaseVoucherResponse {
+	bool success = 1;
+	string message = 2;
+}
