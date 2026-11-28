@@ -4,3 +4,10 @@ services:
     build:
       context: .
       dockerfile: Services/Movie/Movie.API/Dockerfile
+
+  pricing.grpc:
+    image: ${DOCKER_REGISTRY-}pricinggrpc
+    build:
+      context: .
+      dockerfile: Services/Pricing/Pricing.Grpc/Dockerfile
+
