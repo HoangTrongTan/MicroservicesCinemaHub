@@ -1,6 +1,4 @@
-﻿using Grpc.Core;
-
-namespace Pricing.Grpc.Services;
+﻿namespace Pricing.Grpc.Services;
 
 public class PricingService
     (PricingDbContext dbContext, ILogger<PricingService> logger)
@@ -164,7 +162,7 @@ public class PricingService
         var code = request.VoucherCode.Trim().ToUpperInvariant();
         var usage = await dbContext.VoucherUsages
             .Include(u => u.Voucher)
-            .FirstOrDefaultAsync(u => u.BookingId == bookingId && u.Voucher.Code == code);
+            .FirstOrDefaultAsync(u => u.BookingId == bookingId && u.Voucher.Code == code, context.CancellationToken);
 
         if (usage is null || usage.IsReleased)
         {
